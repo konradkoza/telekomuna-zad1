@@ -110,6 +110,7 @@ public class Kodowanie {
 
 
     private byte addParity(byte msg){
+        byte p = 0;
         byte parityByte = 0;
         for (int i = 0; i < 8; i++) {
             p =(byte) (msg & matrixPart[i]);
@@ -122,6 +123,7 @@ public class Kodowanie {
     }
 
     private byte error(short msg){
+        short p = 0;
         byte parityByte = 0;
         for (int i = 0; i < 8; i++) {
             p = (short) ( (msg & 0xFFFF) & (matrixFull[i] & 0xFFFF));
