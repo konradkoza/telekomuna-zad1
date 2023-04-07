@@ -4,14 +4,13 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="p.lodz.kodowanie.HelloController">
    <children>
-      <TextArea layoutX="34.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="encodedText" layoutX="34.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" />
       <TextArea layoutX="366.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="253.0" layoutY="112.0" mnemonicParsing="false" text="&gt;&gt; encode &gt;&gt;" />
-      <Button layoutX="253.0" layoutY="152.0" mnemonicParsing="false" text="&lt;&lt; decode &lt;&lt;" />
-      <Button layoutX="34.0" layoutY="285.0" mnemonicParsing="false" text="Wczytaj" />
+      <Button layoutX="253.0" layoutY="112.0" mnemonicParsing="false" text="&gt;&gt; zakoduj &gt;&gt;" />
+      <Button layoutX="253.0" layoutY="152.0" mnemonicParsing="false" text="&lt;&lt; dekoduj &lt;&lt;" />
+      <Button layoutX="34.0" layoutY="285.0" mnemonicParsing="false" onAction="#loadEncoded" text="Wczytaj" />
       <Button layoutX="34.0" layoutY="316.0" mnemonicParsing="false" text="Zapisz" />
       <Button layoutX="507.0" layoutY="285.0" mnemonicParsing="false" text="Wczytaj" />
       <Button layoutX="516.0" layoutY="316.0" mnemonicParsing="false" text="Zapisz" />
