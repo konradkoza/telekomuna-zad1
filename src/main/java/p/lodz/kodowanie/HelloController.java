@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class HelloController {
 
@@ -21,6 +23,34 @@ public class HelloController {
     public TextArea encodedText;
     public TextArea decodedText;
     FileChooser fileChooser = new FileChooser();
+
+    byte[] encodedMessage;
+    byte[] decodedMessage;
+
+    public void decode(ActionEvent actionEvent) throws IOException {
+        byte[] message = coding.decode(encodedMessage);
+        decodedMessage = message;
+        coding.saveFileAsBytes(message, "decoded.txt");
+        String decodedMessage = new String(Files.readAllBytes(Paths.get("decoded.txt")));
+        decodedText.setText(decodedMessage);
+    }
+
+    public void encode(ActionEvent actionEvent) throws IOException {
+        byte[] message = coding.encode(decodedMessage);
+        encodedMessage = message;
+        coding.saveFileAsBytes(message, "encoded.txt");
+        String encodedMessage = new String(Files.readAllBytes(Paths.get("encoded.txt")));
+        encodedText.setText(encodedMessage);
+    }
+
+    public void loadEncoded(ActionEvent actionEvent) throws IOException {
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
+        File file = fileChooser.showOpenDialog(null);
+        String content = Files.readString(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
+        encodedMessage = content.getBytes();
+        encodedText.setText(content);
+    }
 
     @FXML
     protected void saveEncoded() throws IOException {
@@ -39,22 +69,16 @@ public class HelloController {
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
         String content = Files.readString(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
+        decodedMessage = content.getBytes();
         decodedText.setText(content);
     }
 
-    public void decode(ActionEvent actionEvent) throws IOException {
-        byte[] message = coding.readMessage("encoded.txt");
-        message = coding.decode(message);
-        coding.saveFileAsBytes(message, "decoded.txt");
-        String decodedMessage = Files.readString(Path.of("decoded.txt"));
-        decodedText.setText(decodedMessage);
-    }
-
-    public void encode(ActionEvent actionEvent) throws IOException {
-        byte[] message = decodedText.getText().getBytes();
-        message = coding.encode(message);
-        coding.saveFileAsBytes(message, "encoded.txt");
-        String encodedMessage = Files.readString(Path.of("encoded.txt"));
-        encodedText.setText(encodedMessage);
+    public void saveDecoded(ActionEvent actionEvent) throws IOException {
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
+        File file = fileChooser.showOpenDialog(null);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+        writer.write(decodedText.getText());
+        writer.close();
     }
 }
