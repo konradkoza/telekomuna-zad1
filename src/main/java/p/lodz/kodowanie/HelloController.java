@@ -24,12 +24,6 @@ public class HelloController {
     byte[] encodedMessage;
     byte[] decodedMessage;
 
-    @FXML
-    public void initialize() {
-        decodedText.setDisable(true);
-        encodedText.setDisable(true);
-    }
-
     public void decode() {
         decodedMessage =  coding.decode(encodedMessage);
         decodedText.setText(new String(decodedMessage, StandardCharsets.UTF_8));
