@@ -2,10 +2,8 @@ package p.lodz.kodowanie;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class HelloController {
 
@@ -27,58 +24,52 @@ public class HelloController {
     byte[] encodedMessage;
     byte[] decodedMessage;
 
-    public void decode(ActionEvent actionEvent) throws IOException {
-        byte[] message = coding.decode(encodedMessage);
-        decodedMessage = message;
-        coding.saveFileAsBytes(message, "decoded.txt");
-        String decodedMessage = new String(Files.readAllBytes(Paths.get("decoded.txt")));
-        decodedText.setText(decodedMessage);
+    @FXML
+    public void initialize() {
+        decodedText.setDisable(true);
+        encodedText.setDisable(true);
     }
 
-    public void encode(ActionEvent actionEvent) throws IOException {
-        byte[] message = coding.encode(decodedMessage);
-        encodedMessage = message;
-        coding.saveFileAsBytes(message, "encoded.txt");
-        String encodedMessage = new String(Files.readAllBytes(Paths.get("encoded.txt")));
-        encodedText.setText(encodedMessage);
+    public void decode() {
+        decodedMessage =  coding.decode(encodedMessage);
+        decodedText.setText(new String(decodedMessage, StandardCharsets.UTF_8));
     }
 
-    public void loadEncoded(ActionEvent actionEvent) throws IOException {
+    public void encode() {
+        encodedMessage = coding.encode(decodedMessage);
+        encodedText.setText(new String(encodedMessage, StandardCharsets.UTF_8));
+    }
+
+    public void loadEncoded() {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
-        String content = Files.readString(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
-        encodedMessage = content.getBytes();
-        encodedText.setText(content);
+        encodedMessage = coding.readMessage(file.getAbsolutePath());
+        encodedText.setText(new String(encodedMessage, StandardCharsets.UTF_8));
     }
 
     @FXML
-    protected void saveEncoded() throws IOException {
+    protected void saveEncoded() {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
-        writer.write(encodedText.getText());
-        writer.close();
+        coding.saveFileAsBytes(encodedMessage, file.getAbsolutePath());
     }
 
     // znajdz metode zeby zapisywac do nowo tworzonego pliku(nie ze musi juz istniec)
     @FXML
-    protected void loadDecoded() throws IOException {
+    protected void loadDecoded() {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
-        String content = Files.readString(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
-        decodedMessage = content.getBytes();
-        decodedText.setText(content);
+        decodedMessage = coding.readMessage(file.getAbsolutePath());
+        decodedText.setText(new String(decodedMessage, StandardCharsets.UTF_8));
     }
 
-    public void saveDecoded(ActionEvent actionEvent) throws IOException {
+    public void saveDecoded() {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
-        writer.write(decodedText.getText());
-        writer.close();
+        coding.saveFileAsBytes(decodedMessage, file.getAbsolutePath());
     }
 }
