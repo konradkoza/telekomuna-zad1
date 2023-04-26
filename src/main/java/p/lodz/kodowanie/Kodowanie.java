@@ -13,45 +13,45 @@ public class Kodowanie {
 
 
     private final short[] matrixFull = {
-            (short) 0xF080,
-            (short) 0xCC40,
-            (short) 0xAA20,
-            (short) 0x5610,
-            (short) 0xE908,
-            (short) 0x9504,
-            (short) 0x7B02,
-            (short) 0xE701
+            (short) 0xF080,  // 1 1 1 1 0 0 0 0 1 0 0 0 0 0 0 0
+            (short) 0xCC40,  // 1 1 0 0 1 1 0 0 0 1 0 0 0 0 0 0
+            (short) 0xAA20,  // 1 0 1 0 1 0 1 0 0 0 1 0 0 0 0 0
+            (short) 0x5610,  // 0 1 0 1 0 1 1 0 0 0 0 1 0 0 0 0
+            (short) 0xE908,  // 1 1 1 0 1 0 0 1 0 0 0 0 1 0 0 0
+            (short) 0x9504,  // 1 0 0 1 0 1 0 1 0 0 0 0 0 1 0 0
+            (short) 0x7B02,  // 0 1 1 1 1 0 1 1 0 0 0 0 0 0 1 0
+            (short) 0xE701   // 1 1 1 0 0 1 1 1 0 0 0 0 0 0 0 1
     };
 
 
     private final byte[] matrixPart =  {
-            (byte) 0xF0,
-            (byte) 0xCC,
-            (byte) 0xAA,
-            (byte) 0x56,
-            (byte) 0xE9,
-            (byte) 0x95,
-            (byte) 0x7B,
-            (byte) 0xE7
+            (byte) 0xF0,   // 1 1 1 1 0 0 0 0
+            (byte) 0xCC,   // 1 1 0 0 1 1 0 0
+            (byte) 0xAA,   // 1 0 1 0 1 0 1 0
+            (byte) 0x56,   // 0 1 0 1 0 1 1 0
+            (byte) 0xE9,   // 1 1 1 0 1 0 0 1
+            (byte) 0x95,   // 1 0 0 1 0 1 0 1
+            (byte) 0x7B,   // 0 1 1 1 1 0 1 1
+            (byte) 0xE7    // 1 1 1 0 0 1 1 1
     };
 
     private final byte[] matrixT = {
-            (byte) 0xED,
-            (byte) 0xDB,
-            (byte) 0xAB,
-            (byte) 0x96,
-            (byte) 0x6A,
-            (byte) 0x55,
-            (byte) 0x33,
-            (byte) 0xF,
-            (byte) 0x80,
-            (byte) 0x40,
-            (byte) 0x20,
-            (byte) 0x10,
-            (byte) 0x08,
-            (byte) 0x04,
-            (byte) 0x02,
-            (byte) 0x01
+            (byte) 0xED,  // 1 1 1 0 1 1 0 1
+            (byte) 0xDB,  // 1 1 0 1 1 0 1 1
+            (byte) 0xAB,  // 1 0 1 0 1 0 1 1
+            (byte) 0x96,  // 1 0 0 1 0 1 1 0
+            (byte) 0x6A,  // 0 1 1 0 1 0 1 0
+            (byte) 0x55,  // 0 1 0 1 0 1 0 1
+            (byte) 0x33,  // 0 0 1 1 0 0 1 1
+            (byte) 0xF,   // 1 1 1 1 0 0 0 0
+            (byte) 0x80,  // 1 0 0 0 0 0 0 0
+            (byte) 0x40,  // 0 1 0 0 0 0 0 0
+            (byte) 0x20,  // 0 0 1 0 0 0 0 0
+            (byte) 0x10,  // 0 0 0 1 0 0 0 0
+            (byte) 0x08,  // 0 0 0 0 1 0 0 0
+            (byte) 0x04,  // 0 0 0 0 0 1 0 0
+            (byte) 0x02,  // 0 0 0 0 0 0 1 0
+            (byte) 0x01   // 0 0 0 0 0 0 0 1
     };
 
     public byte[] readMessage(String fileName){
@@ -127,7 +127,6 @@ public class Kodowanie {
         byte parityByte = 0;
         for (int i = 0; i < 8; i++) {
             p = (short) ( (msg & 0xFFFF) & (matrixFull[i] & 0xFFFF));
-//            System.out.println(String.format("%16s", Integer.toBinaryString(((msg) & 0xFFFF))).replace(' ', '0'));
             if(parity(p)){
                 parityByte = (byte) (parityByte ^ (1 << (7 - i)));
 
@@ -139,7 +138,6 @@ public class Kodowanie {
     private byte verify(short msg) {
         byte err = error(msg);
         byte msgByte = (byte) ((msg & 0xFFFF) >> 8);
-        System.out.println(String.format("%8s", Integer.toBinaryString(((err) & 0xFF))).replace(' ', '0'));
         if(err != 0){
             for (int i = 0; i < 8; i++) {
                 if(err  == matrixT[i] ){
@@ -162,8 +160,6 @@ public class Kodowanie {
                 }
             }
         }
-
-//        System.out.println(String.format("%8s", Integer.toBinaryString((byte) ((msg & 0xFF00) >> 8))).replace(' ', '0'));
         return msgByte;
     }
 
@@ -185,15 +181,7 @@ public class Kodowanie {
             message[i/2] = (short) (((msg[i++] & 0xFF) << 8) | (msg[i] & 0xFF));
         }
 
-//        StringBuilder builder = new StringBuilder();
-//        for (int i = 0; i < message.length; i++) {
-//            builder.append( String.format("%16s", Integer.toBinaryString(message[i] & 0xFFFF)).replace(' ', '0'));
-//        }
-//        System.out.println(builder.toString());
-
         for (int i = 0; i < message.length; i++ ) {
-
-//            decoded[i/2] = msg[i];
             decoded[i] = verify(message[i]);
         }
         return decoded;

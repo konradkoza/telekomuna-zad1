@@ -35,7 +35,7 @@ public class HelloController {
     }
 
     public void loadEncoded() {
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
         encodedMessage = coding.readMessage(file.getAbsolutePath());
@@ -44,16 +44,16 @@ public class HelloController {
 
     @FXML
     protected void saveEncoded() {
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
-        File file = fileChooser.showOpenDialog(null);
+        File file = fileChooser.showSaveDialog(null);
         coding.saveFileAsBytes(encodedMessage, file.getAbsolutePath());
     }
 
     // znajdz metode zeby zapisywac do nowo tworzonego pliku(nie ze musi juz istniec)
     @FXML
     protected void loadDecoded() {
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
         File file = fileChooser.showOpenDialog(null);
         decodedMessage = coding.readMessage(file.getAbsolutePath());
@@ -61,9 +61,9 @@ public class HelloController {
     }
 
     public void saveDecoded() {
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("ALL FILES", "*.*"));
-        File file = fileChooser.showOpenDialog(null);
+        File file = fileChooser.showSaveDialog(null);
         coding.saveFileAsBytes(decodedMessage, file.getAbsolutePath());
     }
 }
