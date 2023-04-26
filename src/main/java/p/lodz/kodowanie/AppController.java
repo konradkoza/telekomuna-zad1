@@ -1,20 +1,13 @@
 package p.lodz.kodowanie;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class HelloController {
+public class AppController {
 
     Kodowanie coding = new Kodowanie();
     public TextArea encodedText;

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="p.lodz.kodowanie.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="p.lodz.kodowanie.AppController">
    <children>
       <TextArea fx:id="decodedText" editable="false" layoutX="34.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" />
       <TextArea fx:id="encodedText" editable="false" layoutX="366.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" />
