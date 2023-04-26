@@ -54,38 +54,6 @@ public class Kodowanie {
             (byte) 0x01   // 0 0 0 0 0 0 0 1
     };
 
-    public byte[] readMessage(String fileName){
-        byte[] result;
-
-        try(FileInputStream fis = new FileInputStream(fileName)) {
-            result = fis.readAllBytes();
-        } catch (IOException e) {
-
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    public void saveFileAsBytes(byte[] dane, String fileName)  {
-        try(FileOutputStream fos = new FileOutputStream(fileName)) {
-            fos.write(dane);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void saveFileAsBytesString(byte[] dane, String fileName)  {
-        StringBuilder builder = new StringBuilder();
-        for (byte b : dane) {
-            builder.append(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
-        }
-        try{
-            Files.writeString(Paths.get(fileName), builder.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private boolean parity(byte msg){
         int sum = 0;
         for (int i = 0; i < 8; i++) {

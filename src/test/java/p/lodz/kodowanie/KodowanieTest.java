@@ -10,11 +10,11 @@ class KodowanieTest {
     void encode() {
         Kodowanie kodowanie = new Kodowanie();
 
-        byte[] message = kodowanie.readMessage("textFiles\\test.txt");
+        byte[] message = FileReadWrite.readMessage("textFiles\\test.txt");
         byte[] encoded =  kodowanie.encode(message);
-        kodowanie.saveFileAsBytes(encoded, "textFiles\\zakodowany.txt");
-        kodowanie.saveFileAsBytesString(message, "textFiles\\message-binary.txt");
-        kodowanie.saveFileAsBytesString(encoded, "textFiles\\zakodowany-binary.txt");
+        FileReadWrite.saveFileAsBytes(encoded, "textFiles\\zakodowany.txt");
+        FileReadWrite.saveFileAsBytesString(message, "textFiles\\message-binary.txt");
+        FileReadWrite.saveFileAsBytesString(encoded, "textFiles\\zakodowany-binary.txt");
 
 
 
@@ -25,10 +25,10 @@ class KodowanieTest {
     void decode(){
 
         Kodowanie kodowanie = new Kodowanie();
-        byte[] encoded = kodowanie.readMessage("textFiles\\zakodowany.txt");
+        byte[] encoded = FileReadWrite.readMessage("textFiles\\zakodowany.txt");
         byte[] decoded =  kodowanie.decode(encoded);
-        kodowanie.saveFileAsBytes(decoded, "textFiles\\odkodowany.txt");
-        kodowanie.saveFileAsBytesString(decoded, "textFiles\\odkodowany-binary.txt");
+        FileReadWrite.saveFileAsBytes(decoded, "textFiles\\odkodowany.txt");
+        FileReadWrite.saveFileAsBytesString(decoded, "textFiles\\odkodowany-binary.txt");
         assertTrue(true);
     }
 }
